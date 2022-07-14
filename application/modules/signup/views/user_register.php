@@ -13,7 +13,7 @@
 <body>
 
 <div class="container">
-  <h2>CI3-HMVC User Register</h2>
+  <h2 class="text-center">CI3-HMVC Pattern - User Register</h2>
   <?php 
   if($this->session->flashdata('Success')):
     echo "<h2>".$this->session->flashdata('Success')."</h2>";

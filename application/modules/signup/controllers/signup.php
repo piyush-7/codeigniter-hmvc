@@ -5,14 +5,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class signup extends MY_Controller {
 
-    
+    public $client;
     public function __construct()
     {
         parent::__construct();
         //Do your magic here
 
         
-        $this->load->library('form_validation');
+        $this->load->library(array('form_validation','session'));
+        $this->client = $this->load->database('client',TRUE);
+
+        
+        $this->load->model('Signup_model');
+        
+
 
         
     }
@@ -46,8 +52,24 @@ class signup extends MY_Controller {
 
 
             //data insert in db
-            if($this->db->insert('tbl_users',$insert_data)):
+            // if($this->db->insert('tbl_users',$insert_data)):
+
                 
+            //     $this->session->set_flashdata('Success', 'Data insert Successfully');
+
+            //     redirect('signup');
+            // else:
+
+            //     $this->session->set_flashdata('Error', 'Data insert Failed');
+            //     redirect('signup');
+            // endif;
+
+
+
+                    //data insert through model
+            if($this->Signup_model->create_user($insert_data)):
+
+                        
                 $this->session->set_flashdata('Success', 'Data insert Successfully');
 
                 redirect('signup');
@@ -63,7 +85,66 @@ class signup extends MY_Controller {
     //    print_r($this->input->post());
 
     //  echo json_encode($this->input->post());
+
+
+    
+    
+
+
         
+    }
+
+    public function get_all_user()
+    {
+        // $this->db->select('*');
+        // $this->db->from('tbl_users');
+        // $this->db->result();
+
+        // $result=$this->db->get('tbl_users');
+
+        // echo json_encode($result);
+
+        $query = $this->db->get('tbl_users');
+
+        foreach ($query->result() as $row)
+        {
+                // echo $row->name;
+
+                echo json_encode($row->name);
+                echo json_encode($row->email);
+                echo json_encode($row->mobile);
+        }
+
+        
+        
+    }
+
+    public function get()
+    {
+        // $this->db->select('*');
+        // $this->db->from('tbl_users');
+        // $q=$this->db->get();
+
+        // $r=$q->result();
+        //  echo json_encode($r);
+
+         //get data through the model
+
+         $r = $this->Signup_model->get_users();
+         echo json_encode($r);
+
+       
+    }
+
+    public function client_get()
+    {
+        $this->client->select('*');
+        $this->client->from('client');
+        $q = $this->client->get();
+
+        $r = $q->result();
+
+        echo json_encode($r);
     }
 
 }
