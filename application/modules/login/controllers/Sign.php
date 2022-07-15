@@ -30,6 +30,8 @@ class Sign extends MY_Controller {
 
            echo json_encode(['msg'=>'not valid']);
 
+           
+
         else:
             $form_data = $this->input->post();
 
