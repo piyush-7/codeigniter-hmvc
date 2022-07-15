@@ -17,6 +17,9 @@ class signup extends MY_Controller {
 
         
         $this->load->model('Signup_model');
+
+        //user-agent
+        $this->load->library('user_agent');
         
 
 
@@ -48,7 +51,10 @@ class signup extends MY_Controller {
 
             $form_data = $this->input->post();
 
-            $insert_data = array('name'=>$form_data['name'],'email'=>$form_data['email'],'mobile'=>$form_data['mobile']);
+            $insert_data = array('name'=>$form_data['name'],
+                                'email'=>$form_data['email'],
+                                'mobile'=>$form_data['mobile'],
+                                    );
 
 
             //data insert in db
@@ -85,11 +91,6 @@ class signup extends MY_Controller {
     //    print_r($this->input->post());
 
     //  echo json_encode($this->input->post());
-
-
-    
-    
-
 
         
     }
@@ -147,6 +148,31 @@ class signup extends MY_Controller {
         echo json_encode($r);
     }
 
+    public function user_agent()
+    {
+                $this->load->library('user_agent');
+
+        if ($this->agent->is_browser())
+        {
+                $agent = "Browser is -".$this->agent->browser().'<br/> '."Version is -".$this->agent->version();
+        }
+        elseif ($this->agent->is_robot())
+        {
+                $agent = $this->agent->robot();
+        }
+        elseif ($this->agent->is_mobile())
+        {
+                $agent = $this->agent->mobile();
+        }
+        else
+        {
+                $agent = 'Unidentified User Agent';
+        }
+
+        echo $agent;
+
+        echo $this->agent->platform();
+    }
 }
 
 /* End of file Controllername.php */

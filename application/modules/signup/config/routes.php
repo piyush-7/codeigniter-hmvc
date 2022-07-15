@@ -13,5 +13,8 @@ $route["signup/get"] = "signup/get";
 
 $route["signup/client"] = "signup/client_get";
 
+//user-agent 
+
+$route["signup/agent"] = "signup/user_agent";
 
 ?>

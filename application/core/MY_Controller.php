@@ -11,6 +11,9 @@ class MY_Controller extends MX_Controller{
         //Do your magic here
 
         $this->load->module('school');
+
+        $this->load->helper('url');
+        
         
     }
     
