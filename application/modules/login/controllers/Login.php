@@ -62,7 +62,7 @@ class Login extends MY_Controller {
 
                         
                 // $this->session->set_flashdata('Success', 'Data insert Successfully');
-                echo json_encode(['Success'=>'201']);
+                echo json_encode(['201'=>'Success']);
 
                 // redirect('signup');
             else:
@@ -70,7 +70,7 @@ class Login extends MY_Controller {
                 // $this->session->set_flashdata('Error', 'Data insert Failed');
 
                 // redirect('signup');
-                echo json_encode(['Not Found'=>'404']);
+                echo json_encode(['404'=>'Not Found']);
             endif;
 
         
@@ -124,7 +124,7 @@ class Login extends MY_Controller {
          if ($this->form_validation->run()==FALSE)
          {  
              
-             echo json_encode(['msg'=>'Not valid']);
+             echo json_encode(['400'=>'Not valid']);
          }
          else
 
@@ -145,7 +145,7 @@ class Login extends MY_Controller {
 
                         
                 // $this->session->set_flashdata('Success', 'Data insert Successfully');
-                echo json_encode(['Success'=>'update(201)']);
+                echo json_encode(['201'=>'update']);
 
                 // redirect('signup');
             else:
@@ -153,64 +153,64 @@ class Login extends MY_Controller {
                 // $this->session->set_flashdata('Error', 'Data insert Failed');
 
                 // redirect('signup');
-                echo json_encode(['Error'=>'404']);
+                echo json_encode(['400'=>'Error']);
             endif;
             
          }
 
     }
 
-    public function store()
-    {
+    // public function store()
+    // {
  
-        // $id=$this->uri->segment(3);
-        $this->form_validation->set_rules('name','Name','required|min_length[4]|alpha');
-        $this->form_validation->set_rules('email','Email','required|min_length[5]|valid_email|valid_emails|is_unique[login.email]');
-        $this->form_validation->set_rules('password','Password','required|min_length[8]|max_length[15]');
-        $this->form_validation->set_rules('mobile', 'Mobile', 'trim|required|exact_length[10]|numeric');
+    //     // $id=$this->uri->segment(3);
+    //     $this->form_validation->set_rules('name','Name','required|min_length[4]|alpha');
+    //     $this->form_validation->set_rules('email','Email','required|min_length[5]|valid_email|valid_emails|is_unique[login.email]');
+    //     $this->form_validation->set_rules('password','Password','required|min_length[8]|max_length[15]');
+    //     $this->form_validation->set_rules('mobile', 'Mobile', 'trim|required|exact_length[10]|numeric');
  
-        $id = $this->input->post('id');
+    //     $id = $this->input->post('id');
  
-        if ($this->form_validation->run() == FALSE)
-        {  
-            if(empty($id))
-            {
-              echo json_encode(['msg'=>'data not available']);
-            }
-        }
-        else
-        {
-            $this->Login_model->createOrUpdate();
-            echo json_encode(['success'=>'201']);
+    //     if ($this->form_validation->run() == FALSE)
+    //     {  
+    //         if(empty($id))
+    //         {
+    //           echo json_encode(['msg'=>'data not available']);
+    //         }
+    //     }
+    //     else
+    //     {
+    //         $this->Login_model->createOrUpdate();
+    //         echo json_encode(['success'=>'201']);
             
-        }
+    //     }
          
-    }
+    // }
 
 
 
 
-    public function update_data($id)
-  {
+//     public function update_data($id)
+//   {
     
 
-    $this->form_validation->set_rules('name','Name','required|min_length[4]|alpha');
-    $this->form_validation->set_rules('email','Email','required|min_length[5]|valid_email|valid_emails|is_unique[login.email]');
-    $this->form_validation->set_rules('password','Password','required|min_length[8]|max_length[15]');
-    $this->form_validation->set_rules('mobile', 'Mobile', 'trim|required|exact_length[10]|numeric');
+//     $this->form_validation->set_rules('name','Name','required|min_length[4]|alpha');
+//     $this->form_validation->set_rules('email','Email','required|min_length[5]|valid_email|valid_emails|is_unique[login.email]');
+//     $this->form_validation->set_rules('password','Password','required|min_length[8]|max_length[15]');
+//     $this->form_validation->set_rules('mobile', 'Mobile', 'trim|required|exact_length[10]|numeric');
  
-    if ($this->form_validation->run()==FALSE)
-    {
-        echo json_encode(['msg'=>'Not valid']);
-    }
-    else
-    {
-        $this->Login_model->update($id);
-       echo json_encode(['Success'=>'201']);
+//     if ($this->form_validation->run()==FALSE)
+//     {
+//         echo json_encode(['msg'=>'Not valid']);
+//     }
+//     else
+//     {
+//         $this->Login_model->update($id);
+//        echo json_encode(['Success'=>'201']);
        
-    }
+//     }
  
-  }
+//   }
 
   public function delete()
     {
@@ -218,14 +218,14 @@ class Login extends MY_Controller {
          
         if (empty($id))
         {
-            echo json_encode(['Data Not Found'=>'404']);
+            echo json_encode(['404'=>'Data Not Found']);
         }
 
         else{
 
              $this->Login_model->delete($id);
 
-            echo json_encode(['Success'=>'Delete(200)']);
+            echo json_encode(['200'=>'Delete']);
 
         }
                     
@@ -243,8 +243,44 @@ class Login extends MY_Controller {
 
         $token = $jwt->encode($result,$jwtsecretkey,'HS256');
 
-        echo json_encode($token);
+
+        // $token = $this->input->post('token');
+        // return  $this->p->update('login',$token);
+
+
+        // echo json_encode($token);
+
+        if($result==TRUE):
+            echo json_encode(['login'=>'success',
+                            'Token'=>$token,
+                            'data'=>$result]);
+
+        else:
+            echo json_encode(['404'=>'error']);
+
+
+        endif;
     }
+
+
+    public function show_one($id) 
+    {
+        $task = $this->p->where(['id' => $id])->get('login')->row();
+
+        if($this->p->where(['id' => $id])->get('login')->row()==true):
+
+            echo json_encode(['Data Found'=>$task]);
+
+        else:
+            echo json_encode(['404'=>'Data Not Found']);
+
+
+        endif;
+
+        
+
+    }
+
 
 }
 

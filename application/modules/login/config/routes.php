@@ -20,11 +20,22 @@ $route["login/update_data"] = "Login/update_data";//not working
 $route["login/delete"] = "Login/delete";//working
 
 
+$route["login/show_one"] = "Login/show_one/$1";
+ //login
 $route["login/login_user"] = "Login/user"; //login
 
-$route["login/token"] = "Auth/token";
-//token
-$route["login/login_token"] = "Auth/login";//token
+
+
+
+
+
+
+
+
+
+// $route["login/token"] = "Auth/token";
+// //token
+// $route["login/login_token"] = "Auth/login";//token
 
 
 
