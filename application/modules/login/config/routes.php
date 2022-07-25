@@ -25,8 +25,18 @@ $route["login/show_one"] = "Login/show_one/$1";
 $route["login/login_user"] = "Login/user"; //login
 
 
+//register controller
+
+$route["login/register"] = "Registration/register_user";
 
 
+//get all data from (Get_all) controller
+
+$route["login/get-all"] = "Get_all/get_all_data";
+
+
+
+ 
 
 
 
